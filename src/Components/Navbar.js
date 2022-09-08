@@ -40,6 +40,7 @@ export default function Navbar() {
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <img src={logo} className={classes.image}/>
           </IconButton>
+          <div className={classes.grow}/>
           <Typography variant="h5" color='textPrimary' component='parrafo'>
             Hello Guest
           </Typography>
