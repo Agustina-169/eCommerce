@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Product() {
+export default function Product({product : {id, name, productType, price, rating, image, description}}) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
@@ -53,20 +53,20 @@ export default function Product() {
           variant='h5'
           color='textSecondary'
           >
-            {accounting.formatMoney(17000 , "AR")}
+            {accounting.formatMoney(price , "AR")}
           </Typography>
         }
-        title="Shoes"
+        title={name}
         subheader="in stock"
       />
       <CardMedia
         className={classes.media}
-        image="https://http2.mlstatic.com/D_NQ_NP_970947-MLA45992360097_052021-W.jpg"
-        title="Nike shoes"
+        image={image}
+        title={name}
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          Running shoes
+         {productType}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -74,7 +74,7 @@ export default function Product() {
           <AddShoppingCart fontSize='large'/>
         </IconButton>
         <IconButton aria-label="share">
-          {Array(4) //(rating)
+          {Array(rating) 
           .fill()
           .map((_, i )=> 
            <p>&#11088;</p>
@@ -97,9 +97,7 @@ export default function Product() {
           
           
           <Typography paragraph>
-            Las zapatillas Nike Air Max 90 son la nueva generación del ícono. 
-            Diseñada con líneas impecables, versátiles y atemporales, mantienen 
-            la misma suela icónica, revestimientos cosidos y detalles clásicos que iniciaron la revolución
+            {description}
             </Typography>
         </CardContent>
       </Collapse>
