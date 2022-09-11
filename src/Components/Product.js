@@ -10,8 +10,10 @@ import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import {AddShoppingCart} from '@material-ui/icons'
+import { AddShoppingCart } from '@material-ui/icons'
 import accounting from 'accounting';
+import { actionTypes } from '../reducer';
+import { useStateValue } from '../StateProvider'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,12 +38,31 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Product({product : {id, name, productType, price, rating, image, description}}) {
+export default function Product({product : {id, name, productType, price, rating, image, description}
+}) {
+
   const classes = useStyles();
+  const[{basket}, dispatch] = useStateValue();
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  const addToBasket = () => {
+    dispatch({
+      type: actionTypes.ADD_TO_BASKET,
+
+      item: {
+        id,
+        name,
+        productType,
+        image,
+        price,
+        rating,
+        description,
+      }
+    })
+  }
 
   return (
     <Card className={classes.root}>
@@ -70,7 +91,7 @@ export default function Product({product : {id, name, productType, price, rating
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to cart" >
+        <IconButton aria-label="add to cart" onClick={addToBasket} >
           <AddShoppingCart fontSize='large'/>
         </IconButton>
         <IconButton aria-label="share">

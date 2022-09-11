@@ -8,6 +8,8 @@ import IconButton from '@material-ui/core/IconButton';
 import logo from '../assets/patito3.png'
 import { ShoppingCart } from '@material-ui/icons';
 import { Badge } from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import { useStateValue } from '../StateProvider'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,27 +34,42 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Navbar() {
   const classes = useStyles();
+  const[{basket}, dispatch] = useStateValue();
 
   return (
     <div className={classes.root}>
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <img src={logo} className={classes.image}/>
+          
+        <Link to='/'>
+        <IconButton >
+            <img 
+            src={logo} 
+            alt='Commerce.js'
+            height='25px'
+            className={classes.image}/>
           </IconButton>
+        </Link>
           <div className={classes.grow}/>
+
           <Typography variant="h5" color='textPrimary' component='parrafo'>
             Hello Guest
           </Typography>
+
           <div className={classes.button}>
             <Button variant='outlined'>
             <strong>Sing in</strong>
             </Button>
+            
+            <Link to='checkout-page'>
             <IconButton aria-label='show cart items' color='inherit'>
-                <Badge badgeContent={1} color='secondary'>
+                <Badge badgeContent={basket.length} color='secondary'>
             <ShoppingCart fontSize='large' color='primary'/>
             </Badge>
             </IconButton>
+
+            </Link>
+           
           </div>
         </Toolbar>
       </AppBar>
