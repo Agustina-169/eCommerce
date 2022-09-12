@@ -8,7 +8,7 @@ export const actionTypes={
 }
 
 export const getBasketTotal = (basket) => {
-    basket?.reduce((amount, item) => Number(item.price)+ Number(amount) , 0)
+    return basket?.reduce((amount, item) => Number(item.price)+ Number(amount) , 0)
     
 }
 

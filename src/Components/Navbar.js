@@ -57,9 +57,11 @@ export default function Navbar() {
           </Typography>
 
           <div className={classes.button}>
+          <Link to='signin'>
             <Button variant='outlined'>
-            <strong>Sing in</strong>
+            <strong>Sign in</strong>
             </Button>
+            </Link>
             
             <Link to='checkout-page'>
             <IconButton aria-label='show cart items' color='inherit'>
