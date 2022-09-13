@@ -60,14 +60,14 @@ export default function SignUp() {
             <CssBaseline />
             <div className={classes.paper}>
 
-            <Avatar className={classes.avatar}>
+            {/*<Avatar className={classes.avatar}>
             <LockOutlinedIcon/>
            </Avatar>
             
         <Typography component='h1' variant='h5'>
                 Sign Up
-        </Typography>
-
+    </Typography>*/}
+    
     <form className={classes.form} noValidate>
         <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
