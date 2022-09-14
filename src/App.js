@@ -1,14 +1,31 @@
-//import Product from './Components/Product';
 import './App.css';
 import Navbar from './Components/Navbar';
 import Products from './Components/Products';
 import CheckoutPage from './Components/CheckoutPage';
-//mport CheckoutCard from './Components/CheckoutCard';
 import { Switch, BrowserRouter as Router, Route } from 'react-router-dom';
 import SignIn from './Components/Signin';
 import SignUp from './Components/Signup';
+import { useEffect } from 'react';
+import { auth } from './firebase';
+import { actionTypes } from './reducer';
+import { useStateValue } from './StateProvider'
 
 function App() {
+
+  const[{user}, dispatch] = useStateValue();
+
+  useEffect(()=>{
+  auth.onAuthStateChanged((authUser)=>{
+    if(authUser){
+      dispatch({
+        type: actionTypes.SET_USER,
+        user: authUser,
+      })
+    }
+  })
+ },[])
+
+
   return (
     <Router>
       <div className="App">
