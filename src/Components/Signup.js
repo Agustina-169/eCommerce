@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -7,12 +7,13 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
-import { Avatar } from '@material-ui/core';
 import { Link as RouteLink, useHistory} from 'react-router-dom'
+import { auth } from '../firebase'
+
+
 
 function Copyright() {
     return (
@@ -42,17 +43,28 @@ const useStyles = makeStyles((theme) => ({
 
     form: {
         whidth: ' 100%',
-        marginTop: theme.spacing(1),
+        marginTop: theme.spacing(3),
 
     },
     submit: {
         margin: theme.spacing(3, 0, 2),
-    }
+    },
 }));
 
 export default function SignUp() {
     const classes = useStyles();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const history = useHistory();
 
+    const signup = (e) => {
+        e.preventDefault();
+        auth.createUserWithEmailAndPassword(email, password).then((auth)=>{
+            console.log(auth)
+            if(auth){
+                history.push('/');
+            }
+        }).catch(err=>alert(err.menssage))}
 
     return (
 
@@ -60,13 +72,6 @@ export default function SignUp() {
             <CssBaseline />
             <div className={classes.paper}>
 
-            {/*<Avatar className={classes.avatar}>
-            <LockOutlinedIcon/>
-           </Avatar>
-            
-        <Typography component='h1' variant='h5'>
-                Sign Up
-    </Typography>*/}
     
     <form className={classes.form} noValidate>
         <Grid container spacing={2}>
@@ -83,21 +88,23 @@ export default function SignUp() {
     />
          </Grid>
 
-         <Grid>
+         <Grid item xs={12} sm={6}>
             <TextField
-             variant='outlind'
+            variant='outlined'
             required
             fullWidth
-            id='email'
+            id='lastName'
             label='Last Name'
             name='lastName'
             autoComplete='lname'
 
     />
      </Grid>
-    <Grid item xs={12} sm={6}>
+    <Grid item xs={12} >
         <TextField
-            variant='outlind'
+            value={email}
+            onChange={e=>setEmail(e.target.value)}
+            variant='outlined'
             required
             fullWidth
             id='email'
@@ -108,6 +115,8 @@ export default function SignUp() {
     </Grid>
     <Grid item xs={12}>
         <TextField
+         value={password}
+         onChange={e=>setPassword(e.target.value)}
             variant='outlined'
             required
             fullWidth
@@ -120,7 +129,7 @@ export default function SignUp() {
     </Grid>
     <Grid item xs={12}>
         <FormControlLabel
-            control={<Checkbox valuea="llowExtraEmails" color="primary" />}
+            control={<Checkbox value="allowExtraEmails" color="primary" />}
             label="i want to receive enspiration, marketing promotions and updates via email."
     />
     </Grid>
@@ -131,6 +140,7 @@ export default function SignUp() {
             variant='contained'
             color='primary'
             className={classes.submit}
+            onClick={signup}
         >
             Sign Up
         </Button>
@@ -140,7 +150,6 @@ export default function SignUp() {
                Already have an account?  Sign in
                </RouteLink>
                        
-                   
                 </Grid>
             </Grid>
         </form>

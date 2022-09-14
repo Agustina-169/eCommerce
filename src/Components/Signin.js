@@ -7,11 +7,9 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-//import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Container from '@material-ui/core/Container';
 import { makeStyles} from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
-//import { Avatar } from '@material-ui/core';
 import { Link as RouteLink, useHistory} from 'react-router-dom'
 
 function Copyright() {
@@ -42,7 +40,7 @@ const useStyles = makeStyles((theme) =>({
 
     form:{
         whidth:' 100%', 
-        marginTop:theme.spacing(1),
+        marginTop:theme.spacing(3),
 
     },
     submit:{
@@ -108,20 +106,18 @@ const useStyles = makeStyles((theme) =>({
         <Grid container>
             
             <Grid item xs>
-                <div>
+                
                 <Link href='#' variant='body2'>
                     Forgot Password?
                 </Link>
                     
-                </div>
-                <RouteLink to='signup'>
+               </Grid>
+               <Grid>
+               <RouteLink to='signup'>
                 { "Don't have an account ? Sign Up"}
                </RouteLink>
            
-            
-               
-           
-        </Grid>
+               </Grid>
         </Grid>
         </form>
         </div>
