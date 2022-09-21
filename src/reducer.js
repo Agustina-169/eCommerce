@@ -42,7 +42,7 @@ const reducer = (state, action)=>{
                         return{
                             ...state,
                             basket: action.basket
-                        }
+                        };
 
             default: return state;
     }

@@ -11,6 +11,7 @@ import { actionTypes } from './reducer';
 import { useStateValue } from './StateProvider'
 import Checkout from './Components/CheckoutForm/Checkout';
 
+
 function App() {
 
   const[{user}, dispatch] = useStateValue();
@@ -48,6 +49,7 @@ function App() {
         <Route path='/checkout'>
           <Checkout/>
         </Route>
+       
 
         <Route path='/'>
           <Products />
