@@ -7,11 +7,11 @@ import PaymentForm from './PaymentForm';
 export const Checkout = () => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
-  const steps = ['Shipping address', 'Payment details'/*, 'Review your order'*/];
+  const steps = ['Shipping address', 'Payment details'];
   const nextStep = () => setActiveStep((prevActiveStep)=> prevActiveStep +1);
   const backStep = () => setActiveStep((prevActiveStep)=> prevActiveStep -1);
 
-  const Form = () => activeStep === 0 ? <AddressForm/> : <PaymentForm/>
+  const Form = () => activeStep === 0 ? <AddressForm nextStep={nextStep}/>  : <PaymentForm/>
 
   return (
     <>
