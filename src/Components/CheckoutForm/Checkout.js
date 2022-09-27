@@ -14,8 +14,7 @@ export const Checkout = () => {
   const Form = () => activeStep === 0 ? <AddressForm nextStep={nextStep}/>  : <PaymentForm/>
 
   return (
-    <>
-      <main className={classes.layout}>
+      <main className={classes.layout} >
       <Paper className={classes.paper}>
         <Typography component='h1' variant='h4' align='center' > 
         checkout
@@ -30,11 +29,9 @@ export const Checkout = () => {
           ))}
         </Stepper>
         <Form/>
-      </Paper>
-      
+        </Paper>
       </main>
-    </>
-
+     
   )
 }
 

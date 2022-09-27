@@ -23,7 +23,7 @@ export const AddressForm = ({nextStep}) => {
          }); 
           nextStep();
         })}>
-        <Grid container spacing={3}>
+        <Grid container spacing={3} >
           <Addressinput required name='fistName'  label='First Name'/>
           <Addressinput required name='lastName'  label='Last Name'/>
           <Addressinput required name='address1'  label='Address'/>
