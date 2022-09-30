@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require ('express');
 const Stripe = require('stripe');
 const cors = require('cors');
 
@@ -12,27 +12,30 @@ app.use(cors({origin:"http://localhost:3000"}));
 app.use(express.json())
 
 
-app.post('/api/checkout', async(req,res)=>{
+app.post("/api/checkout", async(req,res)=>{
     console.log(req.body);
     res.send('recibido');
     const {id, amount} = req.body;
 
     try {
-        const payment = await stripe.paymentItents.create({
+        const payment = await stripe.paymentIntents.create({
             amount,
             currency : "AR",
             description: "Basket of products",
+            payment_method: id,
             confirm: true,
-        })
+        });
         console.log(payment)
-        return res.status(2000).json({message : "Succesful payment"})
+        return res.status(200).json({message : "Succesful payment"})
 
-    } catch (error) {console.log(error)}
+    } catch (error) {
+        return res.json({message: error.raw.message})
+    }
 })
 
 
 
 app.listen(3001,() => {
-    console.log('server listening port' ,3001)
+    console.log('server on port' ,3001)
 })
 
