@@ -59,7 +59,7 @@ export default function CheckoutCard({product : {id, name, productType, price, r
           variant='h5'
           color='textSecondary'
           >
-            {accounting.formatMoney(price , "AR")}
+            {accounting.formatMoney(price , "USD")}
           </Typography>
         }
         title={name}

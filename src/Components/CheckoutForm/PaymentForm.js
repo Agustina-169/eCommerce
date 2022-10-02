@@ -1,13 +1,15 @@
-import { Button, Divider, Typography } from '@material-ui/core';
+import { Button, CircularProgress, Divider, Typography } from '@material-ui/core';
 import Review from './Review';
 import { Elements, CardElement, useStripe, useElements} from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import { getBasketTotal } from '../../reducer';
+import { actionTypes, getBasketTotal } from '../../reducer';
 import { useStateValue } from '../../StateProvider';
 import accounting from 'accounting';
 import  axios  from 'axios';
+import { useState } from 'react';
 
 const stripePromise =  loadStripe('pk_test_51Lmgb5Kzhzd3hU3yoOIvw8ibodbVCKUiRQGIeTEbuJF1wXB7Ovy33fnmuTtYcTp3RH8W4Y0KaCyJPcio8HjMMQWu008fPHsOZ7');
+
 const CARD_ELEMENT_OPTIONS ={
   inconStyle:'solid',
   hidePostalCode: true,
@@ -32,7 +34,9 @@ const CARD_ELEMENT_OPTIONS ={
 
 
 const CheckoutForm = ({backStep, nextStep}) => {
-  const [{basket, dispatch }] = useStateValue();
+  const [{basket, paymentMessage }, dispatch] = useStateValue();
+  const [loading, setLoading] = useState(false);
+
   const stripe = useStripe();
   const elements = useElements();
 
@@ -42,19 +46,33 @@ const CheckoutForm = ({backStep, nextStep}) => {
       type: 'card',
       card: elements.getElement(CardElement)
     })
-
+    setLoading(true);
     if(!error){
       const {id} = paymentMethod;
      try {
       const { data } = await  axios.post("http://localhost:3001/api/checkout", 
       {
         id,
-        amount: getBasketTotal(basket),
+        amount: getBasketTotal(basket) * 100,
+      });
+      dispatch({
+        type: actionTypes.SET_PAYMENT_MESSAGE,
+        paymentMessage: data.message,
+      });
+      if(data.message === 'Successful Payment'){
+        dispatch({
+          type: actionTypes.EMPTY_BASKET,
+          basket: [],
+        });
       }
-      );
-      console.log(data);
+      elements.getElement(CardElement).clear();
+      nextStep();
     }
-      catch (error){console.log(error)} 
+      catch (error){
+      console.log(error);
+      nextStep();
+      } 
+      setLoading(false);
    } 
  }
  
@@ -73,7 +91,11 @@ const CheckoutForm = ({backStep, nextStep}) => {
       type='submit' 
       variant='contained'  
       color='primary'>
-     {`Pay ${accounting.formatMoney(getBasketTotal(basket),'$' )}`}
+     {loading ? (<CircularProgress/>) 
+     :
+      (`Pay ${accounting.formatMoney(getBasketTotal(basket),'$' )}`)
+     }
+      
       </Button>
       </div>
     </form>

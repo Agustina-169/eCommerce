@@ -74,7 +74,7 @@ export default function Product({product : {id, name, productType, price, rating
           variant='h5'
           color='textSecondary'
           >
-            {accounting.formatMoney(price , "AR")}
+            {accounting.formatMoney(price , "USD")}
           </Typography>
         }
         title={name}

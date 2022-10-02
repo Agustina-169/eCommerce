@@ -28,7 +28,7 @@ const Total = () =>{
     return(
         <div className={classes.root}>
             <h5>Total items: {basket?.length}</h5>
-            <h5>{accounting.formatMoney(getBasketTotal(basket), 'ARG')}</h5>
+            <h5>{accounting.formatMoney(getBasketTotal(basket), 'USD')}</h5>
            <RouteLink to='checkout'>
 
            <Button className={classes.button} 
